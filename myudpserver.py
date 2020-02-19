@@ -1,7 +1,7 @@
 import socket
 
 """Config Port destino"""
-UDP_IP = "192.168.24.236"
+UDP_IP = "192.168.24.100"
 UDP_PORT = 9600
 
 """"Config port local"""
@@ -36,3 +36,5 @@ sock = socket.socket(socket.AF_INET,
     
 sock.bind((UDP_IP_LOCAL,UDP_PORT_LOCAL))
 sock.sendto(MESSAGE,(UDP_IP,UDP_PORT))
+
+
