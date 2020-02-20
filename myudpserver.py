@@ -7,6 +7,8 @@ UDP_PORT = 9600
 """"Config port local"""
 UDP_IP_LOCAL = "192.168.24.236"
 UDP_PORT_LOCAL = 4023
+
+
 ICF=B"\x80"
 RESERVED=B"\x00"
 GATEWAY=B"\x02"
@@ -31,10 +33,27 @@ COMMAND_DATA=MEMORY_DM+Begginer_Adress+Begginer_Adress_Bites+Number_Items
 MESSAGE = FINS_HEADER+COMMAND_CODE+COMMAND_DATA
 
 
-sock = socket.socket(socket.AF_INET,
-                     socket.SOCK_DGRAM)
-    
-sock.bind((UDP_IP_LOCAL,UDP_PORT_LOCAL))
-sock.sendto(MESSAGE,(UDP_IP,UDP_PORT))
+
+def SendData():
+    try:
+        s = socket.socket(socket.AF_INET,
+                            socket.SOCK_DGRAM)  
+        s.bind((UDP_IP_LOCAL, UDP_PORT_LOCAL))
+        s.sendto(MESSAGE, (UDP_IP, UDP_PORT))
+    except:
+        print("Sending Error!!!\n")
+
+    return s
+
+def ReceiveData(sock):
+    print("Receiving data: \n")
+
+    while True:
+        data, addr = sock.recvfrom(416)      # buffer size is 4096 bytes
+        print ("received message:", data)
 
 
+if __name__ == "__main__":    
+    s = SendData()
+    ReceiveData(s)
+    print("Termino.!")
